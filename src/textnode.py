@@ -1,10 +1,10 @@
 from enum import Enum
 from htmlnode import LeafNode
 
-TextType = Enum('Text', ['PLAIN', 'BOLD', 'ITALIC', 'CODE', 'LINK', 'IMAGE'])
+TextType = Enum('Text', ['TEXT', 'BOLD', 'ITALIC', 'CODE', 'LINK', 'IMAGE'])
 
 class TextNode():
-    def __init__(self, text=None, text_type=TextType.PLAIN, url=None):
+    def __init__(self, text=None, text_type=TextType.TEXT, url=None):
         self.text = text
         self.text_type = text_type
         self.url = url
@@ -30,7 +30,7 @@ def text_node_to_html_node(text_node):
     props = None
 
     match getattr(text_node, "text_type"):
-        case TextType.PLAIN:
+        case TextType.TEXT:
             tag = None
 
         case TextType.BOLD:

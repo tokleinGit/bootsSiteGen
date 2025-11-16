@@ -10,18 +10,17 @@ class TextNode():
         self.url = url
 
     def __eq__(self, node):
-        if node is not TextNode:
+        if isinstance(node, TextNode):
             return False
         
-        x = True
-        x &= self.text == node.text
-        x &= self.text_type == node.text_type
-        x &= self.url == node.url
-
-        return x
-    
+        return (
+            self.text == node.text and
+            self.text_type.value == node.text_type.value and
+            self.url == node.url
+        )
+        
     def __repr__(self):
-        return f"TextNode({self.text}, {self.text_type}, {self.url})"
+        return f"TextNode({self.text!r}, {self.text_type!r}, {self.url!r})"
     
 def text_node_to_html_node(text_node):    
     text = getattr(text_node, "text")

@@ -1,3 +1,4 @@
+import re
 from textnode import TextNode, TextType
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
@@ -13,7 +14,10 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             raise Exception("Invalid Markdown syntax!")
 
         while True:
+            if not delimiter in text:
+                break;
             parts = text.split(delimiter, 2)
+            
             if parts[0] == "":
                 new_nodes.append(TextNode(parts[1], text_type))
             else:
@@ -23,12 +27,15 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                         TextNode(parts[1], text_type),
                     ]
                 )
-
             text = parts[-1]
-            if not delimiter in text:
-                break;
 
         if text != "" and text != getattr(new_nodes[-1], "text"):
             new_nodes.append(TextNode(text, TextType.TEXT))
 
     return new_nodes
+
+def extract_markdown_images(text):
+    return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+def extract_markdown_links(text):
+    return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)

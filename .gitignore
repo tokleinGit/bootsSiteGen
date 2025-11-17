@@ -209,3 +209,6 @@ __marimo__/
 # Doodle
 doodle.py
 doodle.sh
+
+# vscode
+.vscode/

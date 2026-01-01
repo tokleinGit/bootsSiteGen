@@ -140,6 +140,39 @@ class TestExtractLink(unittest.TestCase):
         self.assertEqual(extract_markdown_images(text_link_2), [])
         self.assertEqual(extract_markdown_images(text_cat), [])
 
+class TestSplitNodeImage(unittest.TestCase):
+    def test_split_nodes_image_debug_output(self):
+        old_nodes = [
+            TextNode("This is text with an ", 'TEXT'),
+            TextNode("![image](https://i.imgur.com/zjjcJKZ.png)", 'IMAGE'),
+            TextNode(" and another ", 'TEXT'),
+            TextNode("![second image](https://i.imgur.com/3elNhQu.png)"),
+        ]
+
+        result = split_nodes_image(old_nodes)
+
+        print("\n--- Debug-Ausgabe: split_nodes_image ---")
+        for i, node in enumerate(result):
+            print(f"Node {i}: {node.__dict__}")
+        
+        print("----------------------------------------\n")
+
+class TestSplitNodeLink(unittest.TestCase):
+    def test_split_nodes_Link_debug_output(self):
+        old_nodes = [
+            TextNode("This is text with a link ", 'TEXT'),
+            TextNode("[to boot dev](https://boot.dev)", 'LINK'),
+            TextNode(" and ", 'TEXT'),
+            TextNode("[to youtube](https://www.youtube.com/@bootdotdev).", 'LINK'),
+        ]
+
+        result = split_nodes_image(old_nodes)
+
+        print("\n--- Debug-Ausgabe: split_nodes_link ---")
+        for i, node in enumerate(result):
+            print(f"Node {i}: {node.__dict__}")
+        
+        print("----------------------------------------\n")
 
 if __name__ == "__main__":
     unittest.main()

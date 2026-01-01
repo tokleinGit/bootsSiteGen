@@ -55,4 +55,4 @@ class ParentNode(HTMLNode):
                 func = getattr(child, "to_html")
                 parts.append(func())
         
-        return f"<{self.tag}{self.props_to_html()}>{"".join(parts)}</{self.tag}>" 
+        return f"<{self.tag}{self.props_to_html()}>{''.join(parts)}</{self.tag}>" 
